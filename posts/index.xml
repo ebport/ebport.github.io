@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Eric Porter</title>
-    <link>https://ebport.github.io/posts/</link>
+    <link>https://ericbporter.com/posts/</link>
     <description>Recent content in Posts on Eric Porter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Fri, 02 Jun 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ebport.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ericbporter.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Build a Fitbit Heart Rate Extract</title>
-      <link>https://ebport.github.io/posts/fitbit_data/</link>
+      <link>https://ericbporter.com/posts/fitbit_data/</link>
       <pubDate>Fri, 02 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ebport.github.io/posts/fitbit_data/</guid>
+      <guid>https://ericbporter.com/posts/fitbit_data/</guid>
       <description>A Fitbit collects an incredible amount of granular data on personal activity, heart rate, and sleep. However, currently most of the detailed data is locked up within the app. This tutorial shows a simple way to extract the heart rate data in an automated fashion.
 This code will generate &amp;lsquo;personal data extracts&amp;rsquo; according to simple specifications, without requiring any copy pasting or manual effort beyond the initial configuration.
 Many others have posted helpful tutorials on this topic.</description>
