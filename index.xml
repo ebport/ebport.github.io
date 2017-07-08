@@ -6,10 +6,20 @@
     <description>Recent content on Eric Porter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 02 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jul 2017 17:12:56 -0400</lastBuildDate>
     
 	<atom:link href="https://ebport.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Preparing for OMSCS - Fall 2017</title>
+      <link>https://ebport.github.io/posts/omscs-prep/</link>
+      <pubDate>Thu, 06 Jul 2017 17:12:56 -0400</pubDate>
+      
+      <guid>https://ebport.github.io/posts/omscs-prep/</guid>
+      <description>I will be starting the Georgia Tech OMSCS program this fall. It has been a while since I&amp;rsquo;ve been in school, so I put together a simple refresher course based on the feedback from reddit, google+, and omscentral.
+Hopefully my thought process can be helpful to others. Obviously preparation will vary depending on individual goals and background. I&amp;rsquo;ll update early in the first semester with feedback and what I wish I would have known.</description>
+    </item>
     
     <item>
       <title>Build a Fitbit Heart Rate Extract</title>
