@@ -12,14 +12,14 @@
     
     
     <item>
-      <title>Emacs Teradata SQL</title>
+      <title>Emacs SQL-Mode for Teradata</title>
       <link>/posts/emacs-td-sql/</link>
       <pubDate>Fri, 31 Aug 2018 17:17:05 -0600</pubDate>
       
       <guid>/posts/emacs-td-sql/</guid>
       <description>A Basic Teradata SQL-Mode for Emacs Lately I have been learning emacs and building out a development workflow.
-I wanted a seamless experience querying Teradata during develpement. I&amp;rsquo;m typically working on shell scripts that use sql with either bteq or tpt.
-Code Here is what I wrote up extending the sql-mode package. This is loaded in my init.el file with `(load &amp;ldquo;my-path&amp;rdquo;). This requires bteq to be installed and in the path.</description>
+I wanted a seamless experience querying Teradata during develpement. I&amp;rsquo;m typically working on shell scripts that use sql through either bteq or tpt.
+Code Here is what I wrote up extending the sql-mode package. This is loaded in my init.el file with (load &amp;quot;my-path/teradata.el&amp;quot;). This requires bteq to be installed and in the path.</description>
     </item>
     
     <item>
