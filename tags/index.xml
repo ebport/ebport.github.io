@@ -2,59 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Eric Porter</title>
-    <link>https://ebport.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on Eric Porter</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Sun, 08 Oct 2017 13:13:26 -0400</lastBuildDate>
+    <language>en-us</language>
     
-	<atom:link href="https://ebport.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Api</title>
-      <link>https://ebport.github.io/tags/api/</link>
-      <pubDate>Sun, 08 Oct 2017 13:13:26 -0400</pubDate>
-      
-      <guid>https://ebport.github.io/tags/api/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Fitbit</title>
-      <link>https://ebport.github.io/tags/fitbit/</link>
-      <pubDate>Fri, 02 Jun 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ebport.github.io/tags/fitbit/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Omscs</title>
-      <link>https://ebport.github.io/tags/omscs/</link>
-      <pubDate>Thu, 06 Jul 2017 17:12:56 -0400</pubDate>
-      
-      <guid>https://ebport.github.io/tags/omscs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://ebport.github.io/tags/python/</link>
-      <pubDate>Sun, 08 Oct 2017 13:13:26 -0400</pubDate>
-      
-      <guid>https://ebport.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Requests</title>
-      <link>https://ebport.github.io/tags/requests/</link>
-      <pubDate>Sun, 08 Oct 2017 13:13:26 -0400</pubDate>
-      
-      <guid>https://ebport.github.io/tags/requests/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

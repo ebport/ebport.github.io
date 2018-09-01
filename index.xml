@@ -2,53 +2,64 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Eric Porter</title>
-    <link>https://ebport.github.io/</link>
+    <link>/</link>
     <description>Recent content on Eric Porter</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Sun, 08 Oct 2017 13:13:26 -0400</lastBuildDate>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 31 Aug 2018 17:17:05 -0600</lastBuildDate>
     
-	<atom:link href="https://ebport.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Building API Extracts with Python and Requests</title>
-      <link>https://ebport.github.io/posts/python-requests-api/</link>
-      <pubDate>Sun, 08 Oct 2017 13:13:26 -0400</pubDate>
+      <title>Emacs Teradata SQL</title>
+      <link>/posts/emacs-td-sql/</link>
+      <pubDate>Fri, 31 Aug 2018 17:17:05 -0600</pubDate>
       
-      <guid>https://ebport.github.io/posts/python-requests-api/</guid>
+      <guid>/posts/emacs-td-sql/</guid>
+      <description>A Basic Teradata SQL-Mode for Emacs Lately I have been learning emacs and building out a development workflow.
+I wanted a seamless experience querying Teradata during develpement. I&amp;rsquo;m typically working on shell scripts that use sql with either bteq or tpt.
+Code Here is what I wrote up extending the sql-mode package. This is loaded in my init.el file with `(load &amp;ldquo;my-path&amp;rdquo;). This requires bteq to be installed and in the path.</description>
+    </item>
+    
+    <item>
+      <title>Current Reading List</title>
+      <link>/reading-list/</link>
+      <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/reading-list/</guid>
+      <description> Currently Reading  Debt - The First 5,000 Years Superforecasting How Emotions are Made: The Secret Life of the Brain Zorba the Greek The Brothers Karamazov  On Deck  Behave Supersizing the Mind: Embodiment, Action, and Cognitive Extension Inadequate Equilibria  2018 Favorites  Skin in the Game The Elephant in the Brain: Hidden Motives in Everyday Life  Top Blogs  Ribbonfarm Slate Star Codex  2017 Favorites  The Dao of Capital Certain to Win Data and Goliath Sapiens Man&amp;rsquo;s Search for Meaning Death&amp;rsquo;s End Siddartha Foundation Trilogy Infinite Jest Homo Deus  </description>
+    </item>
+    
+    <item>
+      <title>Python Requests Api</title>
+      <link>/posts/python-requests-api/</link>
+      <pubDate>Sun, 08 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/python-requests-api/</guid>
       <description>Recently I have been writing a lot of code to generate flat file extracts from REST apis. This task is relatively straightforward, but can be quite time consuming if not approached in the correct manner.
 In this post I have put together a simple example pipeline for quickly generating an extract using Python with the requests library. The goal is to be able to have a flat file extract ready to analyze in an hour or less.</description>
     </item>
     
     <item>
-      <title>Preparing for OMSCS - Fall 2017</title>
-      <link>https://ebport.github.io/posts/omscs-prep/</link>
-      <pubDate>Thu, 06 Jul 2017 17:12:56 -0400</pubDate>
+      <title>OMSCS Prep</title>
+      <link>/posts/omscs-prep/</link>
+      <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ebport.github.io/posts/omscs-prep/</guid>
+      <guid>/posts/omscs-prep/</guid>
       <description>I will be starting the Georgia Tech OMSCS program this fall. It has been a while since I&amp;rsquo;ve been in school, so I put together a simple refresher course based on the feedback from reddit, google+, and omscentral.
 Hopefully my thought process can be helpful to others. Obviously preparation will vary depending on individual goals and background. I&amp;rsquo;ll update early in the first semester with feedback and what I wish I would have known.</description>
     </item>
     
     <item>
-      <title>Build a Fitbit Heart Rate Extract</title>
-      <link>https://ebport.github.io/posts/fitbit_data/</link>
+      <title>Fitbit Data</title>
+      <link>/posts/fitbit-data/</link>
       <pubDate>Fri, 02 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ebport.github.io/posts/fitbit_data/</guid>
+      <guid>/posts/fitbit-data/</guid>
       <description>A Fitbit collects an incredible amount of granular data on personal activity, heart rate, and sleep. However, currently most of the detailed data is locked up within the app. This tutorial shows a simple way to extract the heart rate data in an automated fashion.
 This code will generate &amp;lsquo;personal data extracts&amp;rsquo; according to simple specifications, without requiring any copy pasting or manual effort beyond the initial configuration.
 Many others have posted helpful tutorials on this topic.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://ebport.github.io/reading-list/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ebport.github.io/reading-list/</guid>
-      <description> Reading List Currently Reading  Debt - The First 5,000 Years Superforecasting How Emotions are Made: The Secret Life of the Brain  On Deck  Behave The Case against Education Supersizing the Mind: Embodiment, Action, and Cognitive Extension Zorba the Greek Inadequate Equilibria  2018 Favorites  Skin in the Game The Elephant in the Brain: Hidden Motives in Everyday Life  Top Blogs  Ribbonfarm Slate Star Codex  2017 Favorites  The Dao of Capital Certain to Win Data and Goliath Sapiens Man&amp;rsquo;s Search for Meaning Death&amp;rsquo;s End Siddartha Foundation Trilogy Infinite Jest Homo Deus  </description>
     </item>
     
   </channel>
