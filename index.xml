@@ -6,10 +6,19 @@
     <description>Recent content on Eric Porter</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Aug 2018 17:17:05 -0600</lastBuildDate>
+    <lastBuildDate>Sat, 05 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Current Reading List</title>
+      <link>/reading-list/</link>
+      <pubDate>Sat, 05 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/reading-list/</guid>
+      <description> Currently Reading  Behave The Sellout The Short Stories, Ernest Hemingway  On Deck  The Idiot Supersizing the Mind: Embodiment, Action, and Cognitive Extension  2019 Favorites Top Blogs  Ribbonfarm Slate Star Codex  2018 Favorites  Skin in the Game The Elephant in the Brain: Hidden Motives in Everyday Life Zorba the Greek Where&amp;rsquo;d You Go, Bernadette  2017 Favorites  The Dao of Capital Certain to Win Data and Goliath Sapiens Man&amp;rsquo;s Search for Meaning Death&amp;rsquo;s End Siddartha Foundation Trilogy Infinite Jest Homo Deus  </description>
+    </item>
     
     <item>
       <title>Emacs SQL-Mode for Teradata</title>
@@ -20,15 +29,6 @@
       <description>A Basic Teradata SQL-Mode for Emacs Lately I have been learning emacs and building out a development workflow.
 I wanted a seamless experience querying Teradata during develpement. I&amp;rsquo;m typically working on shell scripts that use sql through either bteq or tpt.
 Code Here is what I wrote up extending the sql-mode package. This is loaded in my init.el file with (load &amp;quot;my-path/teradata.el&amp;quot;). This requires bteq to be installed and in the path.</description>
-    </item>
-    
-    <item>
-      <title>Current Reading List</title>
-      <link>/reading-list/</link>
-      <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/reading-list/</guid>
-      <description> Currently Reading  Debt - The First 5,000 Years Superforecasting How Emotions are Made: The Secret Life of the Brain Zorba the Greek The Brothers Karamazov  On Deck  Behave Supersizing the Mind: Embodiment, Action, and Cognitive Extension Inadequate Equilibria  2018 Favorites  Skin in the Game The Elephant in the Brain: Hidden Motives in Everyday Life  Top Blogs  Ribbonfarm Slate Star Codex  2017 Favorites  The Dao of Capital Certain to Win Data and Goliath Sapiens Man&amp;rsquo;s Search for Meaning Death&amp;rsquo;s End Siddartha Foundation Trilogy Infinite Jest Homo Deus  </description>
     </item>
     
     <item>
