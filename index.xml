@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Eric Porter</title>
+    <link>http://ericbporter.com/</link>
+    <description>Recent content on Eric Porter</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Mar 2020 21:22:45 -0500</lastBuildDate>
+    
+	<atom:link href="http://ericbporter.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reading List</title>
+      <link>http://ericbporter.com/reading-list/</link>
+      <pubDate>Fri, 13 Mar 2020 21:22:45 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/reading-list/</guid>
+      <description>Currently Reading  Data and Reality Madame Bovary  On Deck  An Elegant Puzzle - Systems of Engineering Management The Gulag Archipelago  2020 Favorites  A Gentleman in Moscow  2019 Favorites  Designing Data-Intensive Applications Managing the Professional Services Firm Ham on Rye War and Peace Anna Karenina  Favorite Blogs  Ribbonfarm Farnam Street  2018 Favorites  Skin in the Game The Elephant in the Brain: Hidden Motives in Everyday Life Zorba the Greek Where&amp;rsquo;d You Go, Bernadette Brothers Karamazov  2017 Favorites  The Dao of Capital Certain to Win Sapiens Man&amp;rsquo;s Search for Meaning Death&amp;rsquo;s End Siddartha Foundation Trilogy Infinite Jest Homo Deus  </description>
+    </item>
+    
+    <item>
+      <title>A Basic Teradata SQL-Mode for Emacs</title>
+      <link>http://ericbporter.com/posts/emacs-td-sql/</link>
+      <pubDate>Fri, 31 Aug 2018 22:17:34 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/posts/emacs-td-sql/</guid>
+      <description>Lately I have been learning emacs and building out a development workflow.
+I wanted a seamless experience querying Teradata during develpement. I&amp;rsquo;m typically working on shell scripts that use sql through either bteq or tpt.
+Code Here is what I wrote up extending the sql-mode package. This is loaded in my init.el file with (load &amp;quot;my-path/teradata.el&amp;quot;). This requires bteq to be installed and in the path. This has been tested on Windows.</description>
+    </item>
+    
+    <item>
+      <title>Python Requests Api</title>
+      <link>http://ericbporter.com/posts/python-requests-api/</link>
+      <pubDate>Sun, 08 Oct 2017 22:17:25 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/posts/python-requests-api/</guid>
+      <description>Recently I have been writing a lot of code to generate flat file extracts from REST apis. This task is relatively straightforward, but can be quite time consuming if not approached in the correct manner.
+In this post I have put together a simple example pipeline for quickly generating an extract using Python with the requests library. The goal is to be able to have a flat file extract ready to analyze in an hour or less.</description>
+    </item>
+    
+    <item>
+      <title>OMSCS Prep</title>
+      <link>http://ericbporter.com/posts/omscs/</link>
+      <pubDate>Thu, 06 Jul 2017 22:17:25 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/posts/omscs/</guid>
+      <description>I will be starting the Georgia Tech OMSCS program this fall. It has been a while since I&amp;rsquo;ve been in school, so I put together a simple refresher course based on the feedback from reddit, google+, and omscentral.
+Hopefully my thought process can be helpful to others. Obviously preparation will vary depending on individual goals and background. I&amp;rsquo;ll update early in the first semester with feedback and what I wish I would have known.</description>
+    </item>
+    
+    <item>
+      <title>Fitbit Data</title>
+      <link>http://ericbporter.com/posts/fitbit-data/</link>
+      <pubDate>Fri, 02 Jun 2017 22:13:25 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/posts/fitbit-data/</guid>
+      <description>A Fitbit collects an incredible amount of granular data on personal activity, heart rate, and sleep. However, currently most of the detailed data is locked up within the app. This tutorial shows a simple way to extract the heart rate data in an automated fashion.
+This code will generate &amp;lsquo;personal data extracts&amp;rsquo; according to simple specifications, without requiring any copy pasting or manual effort beyond the initial configuration.
+Many others have posted helpful tutorials on this topic.</description>
+    </item>
+    
+  </channel>
+</rss>

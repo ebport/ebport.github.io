@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	
+	
+	
+	
+	<title>
+	    A Basic Teradata SQL-Mode for Emacs | Eric Porter
+	</title>
+    </head>
+    <body>
+
+	<header>
+	    <nav>
+		<ul class="menu">
+		    
+		    <li><a href="/">Home</a></li>
+		    
+		    <li><a href="/posts/">Posts</a></li>
+		    
+		    <li><a href="/reading-list/">Reading List</a></li>
+		    
+		</ul>
+		<hr/>
+	    </nav>
+
+	</header>
+	<main>
+	    
+
+<h1>A Basic Teradata SQL-Mode for Emacs</h1>
+
+<p>Lately I have been learning emacs and building out a development workflow.</p>
+
+<p>I wanted a seamless experience querying Teradata during develpement. I&rsquo;m typically working on shell scripts that use sql through either bteq or tpt.</p>
+
+<h2 id="code">Code</h2>
+
+<p>Here is what I wrote up extending the sql-mode package. This is loaded in my <code>init.el</code> file with <code>(load &quot;my-path/teradata.el&quot;)</code>. This requires bteq to be installed and in the path. This has been tested on Windows.</p>
+
+<pre><code>(defcustom sql-teradata-options nil
+  &quot;List of additional options for `sql-teradata-program'.&quot;
+  :type '(repeat string)
+  :group 'SQL)
+
+(defcustom sql-teradata-program &quot;bteq&quot;
+  &quot;Command to start bteq by Teradata.&quot;
+  :type 'file
+  :group 'SQL)
+
+(defcustom sql-teradata-login-params '(sql-database)
+  &quot;Login parameters to connect to TeradataDB.&quot;
+  :type 'sql-login-params
+  :group 'SQL)
+
+
+(defun sql-comint-teradata (product options &amp;optional buf-name)
+  &quot;Connect to TeradataDB in a comint buffer. Hardcodes tdpid and logmech for now&quot;
+  (sql-comint product nil buf-name)
+  (insert (concat &quot;.SET TDP &quot; &quot;my-pid&quot;))
+  (comint-send-input)
+  (insert &quot;.logmech ldap;&quot;)
+  (comint-send-input)  
+  (insert &quot; .logon &quot;)
+  (comint-send-input))
+
+(sql-add-product 'teradata &quot;Teradata&quot;
+		 :sqli-program 'sql-teradata-program
+		 :prompt-regexp &quot;^&quot;
+		 :prompt-length 0
+		 :sqli-options 'sql-teradata-options
+		 :sqli-login 'sql-teradata-login-params
+		 :sqli-comint-func 'sql-comint-teradata
+		 )
+
+(defun sql-teradata (&amp;optional buffer)
+  &quot;Run bteq by Teradata as an inferior process.&quot;
+  (interactive &quot;P&quot;)
+  (sql-product-interactive 'teradata buffer))
+
+</code></pre>
+
+<p>To start an interactive session in emacs run <code>M-x sql-teradata</code>.</p>
+
+<p>I&rsquo;m considering improvements to support different environments (tdpids) and configure better default settings for bteq. Bteq does not support command line arguments for login like most other database cli tools. This limits our ability to use existing sql-mode functionality to customize our interactions with teradata.</p>
+
+
+
+	</main>
+	<footer>
+	    <hr/>
+	    &copy; <a href="https://www.ericbporter.com">Eric Porter</a> 2017 &ndash; 2020 | <a href="https://github.com/ebport">Github</a>
+	</footer>
+    </body>
+</html>

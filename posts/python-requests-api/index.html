@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	
+	
+	
+	
+	<title>
+	    Python Requests Api | Eric Porter
+	</title>
+    </head>
+    <body>
+
+	<header>
+	    <nav>
+		<ul class="menu">
+		    
+		    <li><a href="/">Home</a></li>
+		    
+		    <li><a href="/posts/">Posts</a></li>
+		    
+		    <li><a href="/reading-list/">Reading List</a></li>
+		    
+		</ul>
+		<hr/>
+	    </nav>
+
+	</header>
+	<main>
+	    
+
+<h1>Python Requests Api</h1>
+
+<p>Recently I have been writing a lot of code to generate flat file
+    extracts from REST apis. This task is relatively straightforward, but
+    can be quite time consuming if not approached in the correct manner.</p>
+
+<p>In this post I have put together a simple example pipeline for quickly
+    generating an extract using Python with the requests library. The goal
+    is to be able to have a flat file extract ready to analyze in an hour or
+    less.</p>
+
+<h2 id="the-one-hour-prototype">The One Hour Prototype</h2>
+
+<p>Speed is essential when it comes to successfully delivering data
+    products to business users. In practice, data engineers often work with
+    data scientists and analysts to initial data exploration without clear
+    requirements. Quickly setting up an extract to deliver data daily in
+    allows for easy analysis and speeds up the profiling process. We can
+    validate whether the source meets our needs, identify data quality
+    issues upfront, and determine requirements for a production
+    implementation.</p>
+
+<p>To illustrate, we&rsquo;ll walk through the process of setting up an extract
+    using the Lever (an applicant tracking system) API. I was recently part
+    of small project to extract Lever data to support custom analysis and
+    reporting. The API docs are
+    <a href="https://hire.lever.co/developer/documentation">here</a>, if you would like
+    to look at the API in more detail. However, this is not required to
+    understand the examples in this post.</p>
+
+<p>Note: all examples were tested with Python 3.6 in windows and linux
+    environments. Specific timing and performance metrics will depend on
+    connection and location.</p>
+
+<h3 id="step-1-authentication">Step 1 - Authentication</h3>
+
+<p>Setting up authentication is our first step.</p>
+
+<p>For Lever an id and key were provide, so we create a basic auth object
+    to pass into our requests. Many apis require OAuth2, see the <a href="#tips-and-tricks">&ldquo;Tips and
+    Tricks&rdquo;</a> section below for an OAuth2
+    example.</p>
+
+<pre><code>import requests
+from requests.auth import HTTPBasicAuth
+id = 'yourid'
+key = 'yourkey'
+
+auth = HTTPBasicAuth(id, key)
+</code></pre>
+
+<p>Authentication can vary significantly between APIs, so be sure follow
+    the instructions in the documentation.</p>
+
+<h3 id="step-2-make-requests-and-get-resource">Step 2 Make Requests and Get Resource</h3>
+
+<p>For this example we will start by extracting information on each
+    candidate in the applicant tracking system. This is found at the
+    &ldquo;candidates&rdquo; endpoint.</p>
+
+<pre><code>base_url = 'https://api.lever.co/v1'
+resource = '/candidates'
+
+resp = requests.get(base_url + resource, auth=auth) # uses our auth object from above
+data = resp.json()
+</code></pre>
+
+<p>Inspecting our data we can determine the top level structure of the
+    response.</p>
+
+<pre><code>{
+  'data': [&lt;list of 100 candidate objects&gt;],
+  'hasNext': True,
+  'next': 'nextid'
+}
+</code></pre>
+
+<p>We see that the data is paginated, and provides the &ldquo;next&rdquo; parameter. We
+    use this to grab all of the candidate data by looping through until
+    &lsquo;hasNext&rsquo; is False.</p>
+
+<pre><code># Make first request
+resp = requests.get(base_url + resource, auth=auth).json()
+candidate_data = resp['data'] # extract data portion of response
+
+# Loop through additional candidates
+while(resp['hasNext']):
+  resp = requests.get(base_url + resource, auth=auth, params={'offset': resp['next']}).json()
+  candidate_data += resp['data']
+</code></pre>
+
+<p>Now we have a list containing all candidates. Each candidate&rsquo;s data is
+    stored in a dictionary.</p>
+
+<p><strong>Example candidate</strong> (some keys removed)</p>
+
+<pre><code>{
+  'applications': [],
+  'createdAt': 1502998652500,
+  'id': 'abcdefg-1234-1234-1234-hijklmnopqrs',
+  'name': 'Candice Candidate',
+  'lastAdvancedAt': 1502998652600,
+  'lastInteractionAt': 1502998666600,
+  'snoozedUntil': None,
+  'sources': ['LinkedIn'],
+  'stage': 'lead-new',
+}
+</code></pre>
+
+<h3 id="step-3-chain-requests">Step 3 Chain requests</h3>
+
+<p>Our custom analysis requirement includes extracting all referral
+    information for each candidate. The Lever api offers this on a per
+    candidate basis via the <code>GET /candidates/:candidate/referrals</code> endpoint.</p>
+
+<pre><code>referrals_resource = '/candidates/{candidate_id}/referrals'
+
+referrals = []
+for cand in candidate_data:
+    resp = requests.get(base_url + referrals_resource.format(candidate_id=cand['id']), auth=auth)
+    referrals += resp.json()['data']
+</code></pre>
+
+<p>This looks simple enough, until we consider the request volume - one
+    request per candidate. For even a small organization, there are likely
+    to be thousands of candidates in the system. With a limit of 10
+    requests/second, we are looking at a best case run time of 100
+    seconds/thousand candidates.</p>
+
+<p>However, timing our current code on one thousand candidates shows we are
+    only processing 2 requests/second.</p>
+
+<p><code>time: real 8m29.737s</code></p>
+
+<p>The first improvement we can make is to add a session, which provides a
+    persistent tcp connection, saving us connection set-up overhead on each
+    request.</p>
+
+<pre><code>s = requests.session()
+s.auth = auth # auth from original set-up
+
+responses = []
+for id in candidate_ids:
+   resp = s.get(base_url + referrals_resource.format(candidate_id=id))
+   responses += resp
+</code></pre>
+
+<p><code>time: real 2m16.737s</code></p>
+
+<p>We can see that this simple change improves our processing to over 7
+    requests/second, much closer to the limit.</p>
+
+<p>For additional improvement we need to add parallelism. The
+    multiprocessing module from the standard python library is a good,
+    simple choice. The Python GIL (global interpreter lock) limits
+    multithreaded parallelism, but since network io is our bottleneck this
+    is not an issue.</p>
+
+<p>We&rsquo;ll also need to handle any <code>429 Too Many Requests</code> responses returned
+    by the api. To do this we&rsquo;ll configure a HTTPAdapter with retry and
+    backoff parameters. For more info on the http adapter see the links in
+    the appendix.</p>
+
+<pre><code>from multiprocessing import Pool
+from requests.packages.urllib3.util.retry import Retry
+
+s = requests.session()
+s.auth = auth
+
+retries = Retry(total=3, backoff_factor=2, status_forcelist=[ 429, 500 ])
+a = requests.adapters.HTTPAdapter(max_retries=retries)
+s.mount('https://', a)
+
+candidate_urls = [base_url + referrals_resource.format(candidate_id=id) for id in candidate_ids]
+
+with Pool(processes=2) as pool:
+    responses = pool.map(s.get, candidate_urls)
+</code></pre>
+
+<p><code>Time: real 1m28.593s</code></p>
+
+<p>Now we are right above limit of ~10 requests/sec, with no 429 responses
+    in our final results. Being slightly above the limit isn&rsquo;t surprising
+    since the api documentation state: &gt;If available, we allow bursts of
+    requests up to 20 per second</p>
+
+<p>For comparison, we can run the same code using Python threads instead of
+    processes. Due to Python&rsquo;s multithreading limitations we expect
+    performance to degrade some, but as our data shows it still offer a
+    major improvement over the single-threaded code.</p>
+
+<pre><code>from multiprocessing.dummy import Pool as ThreadPool
+from requests.packages.urllib3.util.retry import Retry
+
+s = requests.session()
+s.auth = auth
+
+retries = Retry(total=3, backoff_factor=2, status_forcelist=[ 429, 500 ])
+a = requests.adapters.HTTPAdapter(max_retries=retries)
+s.mount('https://', a)
+
+candidate_urls = [base_url + referrals_resource.format(candidate_id=id) for id in candidate_ids]
+
+with ThreadPool(processes=2) as pool:
+    responses = pool.map(s.get, candidate_urls)
+</code></pre>
+
+<p><code>Time: real 1m36.907s</code></p>
+
+<h4 id="performance-summary">Performance Summary</h4>
+
+<table>
+    <thead>
+	<tr>
+	    <th>Method</th>
+	    <th>Parallelism</th>
+	    <th>Time (1000 requests)</th>
+	    <th>Requests/second</th>
+	</tr>
+    </thead>
+
+    <tbody>
+	<tr>
+	    <td>Requests without Session</td>
+	    <td>None</td>
+	    <td>510 sec</td>
+	    <td>2.0</td>
+	</tr>
+
+	<tr>
+	    <td>Session (Default Config)</td>
+	    <td>None</td>
+	    <td>137 sec</td>
+	    <td>7.3</td>
+	</tr>
+
+	<tr>
+	    <td>Session w/Multiprocessing</td>
+	    <td>2 processes</td>
+	    <td>89 sec</td>
+	    <td>11.2</td>
+	</tr>
+
+	<tr>
+	    <td>Session w/Multiprocessing</td>
+	    <td>2 threads</td>
+	    <td>97 sec</td>
+	    <td>10.3</td>
+	</tr>
+    </tbody>
+</table>
+
+<p>Note: all timing was done on a sample of 1000 candidates using the Linux
+    time utility, <code>time python referrals.py</code>.</p>
+
+<p>Practically, there are two key takeaways for extracting data with large
+    amounts of requests:</p>
+
+<ol>
+    <li>Always use persistent session when possible.</li>
+    <li>Additional performance is available through parallelism, but is
+	typically constrained by the api&rsquo;s rate limit.</li>
+</ol>
+
+<h3 id="step-4-process-and-deliver-flat-file">Step 4 Process and deliver flat file</h3>
+
+<p>End users often want the json request data merged and flattened out for
+    use in visualization and analytics tools.</p>
+
+<p>JSON Candidate record</p>
+
+<pre><code>{
+  'applications': [],
+  'createdAt': 1502998652500,
+  'id': 'abcdefg-1234-1234-1234-hijklmnopqrs',
+  'name': 'Candice Candidate',
+  'lastAdvancedAt': 1502998652600,
+  'lastInteractionAt': 1502998666600,
+  'snoozedUntil': None,
+  'sources': ['LinkedIn','Referral'],
+  'stage': 'lead-new',
+}
+</code></pre>
+
+<p>Flattened record</p>
+
+<pre><code>applications|createdAt|id|name|lastAdvancedAt|lastInteractionAt|snoozedUntil|sources|stage
+|1502998652500|abcdefg-1234-1234-1234-hijklmnopqrs|Candice Candidate|1502998652600|1502998666600|None|LinkedIn,Referral|lead-new
+</code></pre>
+
+<p>We can flatten this with a simple for loop. Since dictionaries are not
+    ordered in Python, we&rsquo;ll manually specify the column order we want.</p>
+
+<pre><code>column_names = ['applications', 'createdAt', 'id', 'name',
+                'lastAdvancedAt', 'lastInteractionAt', 'snoozedUntil',
+                'sources', 'stage']
+records = []
+for candidate in candidates:
+  record = []
+  for col in column_names:
+    if isinstance(candidate[col], list):
+      record.append(','.join(candidate[col])) # handles nested lists, like in sources field
+    else:
+      record.append(candidate[col])
+  records.append(record)
+
+# write list to flat file
+with open('filepath.dat', 'w') as f:
+  f.write('|'.join(column_names) + '\n')
+  for r in records:
+    f.write(('|'.join(str(val) for val in r)) + '\n')
+</code></pre>
+
+<p>The data processing library Pandas also offers a json normalization
+    function. This is useful if you want to take advantage of pandas
+    transformations. For complex nesting structures, multiple passes of
+    <code>json_normalize</code> and/or additional transformations will likely be
+    needed.</p>
+
+<pre><code>import pandas as pd
+from pandas.io.json import json_normalize
+
+df = json_normalize(candidates)
+df.to_csv('filepath.dat', sep='|', columns=column_names, index=False)
+</code></pre>
+
+<p>Now we have a flat file ready to be shared with end users.</p>
+
+<h3 id="tips-and-tricks">Tips and Tricks</h3>
+
+<p>Below are a few snippets for a few additional tasks that often come up
+    when building an api extract.</p>
+
+<p><strong>Incremental Updates</strong></p>
+
+<p>If the extract data is being stored somewhere like a database, we only
+    need to extract changed data from the API. Most apis offer
+    straightforward ways to determine update dates for objects.</p>
+
+<p>From the Lever api we see the candidates endpoint takes an updated at
+    parameter.</p>
+
+<blockquote>
+    <p>updated_at_start, updated_at_end 1407460069499</p>
+
+    <p>Optional Filter candidates by the timestamp they were last updated. If
+	only updated_at_start is specified, all candidates updated from that
+	timestamp (inclusive) to the present will be included. If only
+	updated_at_end is specified, all candidates updated before that
+	timestamp (inclusive) are included.</p>
+</blockquote>
+
+<pre><code>base_url = 'https://api.lever.co/v1'
+resource = '/candidates'
+update_param = {'updated_at_start': yesterday_timestamp}
+resp = requests.get(base_url + resource, auth=auth, params=update_param)
+</code></pre>
+
+<p><strong>OAuth2.0</strong></p>
+
+<p>OAuth2 is the current standard for API authentication. There is some
+    vendor variation in implementation, but the basics remain the same.</p>
+
+<ol>
+    <li>Obtain clientid and secret from API admin</li>
+    <li>Make POST request to API to obtain an authorization token</li>
+    <li>Use authorization token to obtain the necessary data</li>
+</ol>
+
+<p>Here it is with code. Session and retry logic is omitted here for
+    conciseness, but it would be the same as demonstrated above.</p>
+
+<pre><code>import requests
+
+oauth_url = 'oauth.com'
+oauth_post_auth = requests.auth.HTTPBasicAuth(id, secret)
+resp = requests.post(oauth_url, auth=oauth_post_auth,
+                     data=default_data,
+                     headers=default_headers,
+                     params=default_params)
+token = resp.json()['token']
+
+endpoint = 'api.co/endpoint'
+auth_header = {'Authorization': 'Bearer ' + token}
+api_request = requests.get(endpoint, headers=auth_header)
+</code></pre>
+
+<p>There are many additional variations on extracting data from APIs, but
+    they all generally follow similar patterns. Below is a list of
+    references that I found helpful for this task.</p>
+
+<h3 id="references">References</h3>
+
+<p><a href="http://docs.python-requests.org/en/master/">Official Requests Documentation</a></p>
+
+<p><a href="http://www.coglib.com/~icordasc/blog/2014/12/retries-in-requests.html">HTTP Adapter Blog
+    Post</a></p>
+
+<p><a href="http://www.restapitutorial.com/lessons/whatisrest.html">REST API Tutorial</a></p>
+
+
+
+	</main>
+	<footer>
+	    <hr/>
+	    &copy; <a href="https://www.ericbporter.com">Eric Porter</a> 2017 &ndash; 2020 | <a href="https://github.com/ebport">Github</a>
+	</footer>
+    </body>
+</html>
