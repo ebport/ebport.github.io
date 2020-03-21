@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	
+	
+	
+	
+	<title>
+	    Dataday Texas 2020 - A Few Quick Notes | Eric Porter
+	</title>
+    </head>
+    <body>
+
+	<header>
+	    <nav>
+		<ul class="menu">
+		    
+		    <li><a href="/">Home</a></li>
+		    
+		    <li><a href="/posts/">Posts</a></li>
+		    
+		    <li><a href="/reading-list/">Reading List</a></li>
+		    
+		</ul>
+		<hr/>
+	    </nav>
+
+	</header>
+	<main>
+	    
+
+<h1>Dataday Texas 2020 - A Few Quick Notes</h1>
+<p>With downtime during pandemic-imposed social distancing, I&rsquo;m returning to reflect on my experience at Dataday Texas 2020. After moving to Austin in 2019, I was pleasantly surprised to see the data-focused event less than a mile from my apartment.</p>
+<p>The 2 key themes I took away from the talks I attended were:</p>
+<ol>
+<li>Open-source business models are becoming less sustainable due to pressure from cloud providers.</li>
+<li>A trend bringing ML to databases for &ldquo;Tunables&rdquo;</li>
+</ol>
+<h2 id="evolution-of-open-source-and-open-core-models">Evolution of Open-Source and Open-Core Models</h2>
+<p>I was not expecting the level of distaste for Amazon among the speakers. It seemed widely accepted that Amazon is a bad actor and negatively impacting, one speaker said &ldquo;strip-mining&rdquo;,  the open-source data ecosystem. This is not a view that I have typically been exposed to in my day-to-day consulting work with Enterprise customers.</p>
+<p>As I understand it, simplistically the negative impact for open-source and open-core companies looks like the following cycle.</p>
+<p><strong>Before AWS</strong></p>
+<ol>
+<li>A small group of developers innovates and creates useful open-source software</li>
+<li>Developers create an &ldquo;open-core&rdquo; services and support business around this software</li>
+</ol>
+<p><strong>After AWS</strong></p>
+<ol>
+<li>A small group of developers innovates and creates useful open-source software</li>
+<li>Developers create sustainable &ldquo;open-core&rdquo; services business around this software</li>
+<li>AWS immediately takes open-source software and APIs and offers as a managed service without contributing back</li>
+<li>Developers no longer have the income stream needed to do great open source work</li>
+</ol>
+<p>For the dire take on this see Marko Rodriguez&rsquo;s <a href="https://www.slideshare.net/slidarko/mmadt-a-virtual-machinean-economic-machine">slides</a>.</p>
+<p>Moving forward we&rsquo;d expect to see:</p>
+<ul>
+<li>Innovative data systems being developed in a closed (as-a-service) manner e.g. Snowflake</li>
+<li>Licensing policies changing for open-source projects to a more defensive stance against cloud providers. This has already happened with Redis, MongoDB and Elastic among others. Innovation in licensing and governance for open-source was a topic that generated animated discussion among the attendees. There didn&rsquo;t seem to be any consensus around a path forward other than that innovation is needed to keep open-source sustainable.</li>
+<li>Radical new ideas on how open-source software is developed and monetized. Marko Rodriguez&rsquo;s mm-ADT is an early vision of what this could look like.</li>
+</ul>
+<h2 id="bringing-ml-into-the-db">Bringing ML into the DB</h2>
+<p>Jonathan Ellis&rsquo;s talk &ldquo;The Next Five Years in Databases&rdquo; covered a topic I hadn&rsquo;t given much consideration lately. When people discuss bringing machine learning capabilities into databases, they are typically referring to specific APIs or hardware for running ML workloads. However, Ellis predicts that the trend to use ML on the database itself will grow much faster.</p>
+<p>Any database typically has hundreds or thousands of tunable parameters. For example working memory, buffer and cache sizes, and many others. There are also many non-DB parameters that can be tuned. These include things like JVM and OS parameters.</p>
+<p>Ellis predicts that technologies for optimizing tunables using ML will grow rapidly.</p>
+<p>Based on this, I&rsquo;m keeping an eye on <a href="https://github.com/cmu-db/ottertune">OtterTune</a> as well as automatic database management features that are being rolled out in As-A-Service solutions like Snowflake.</p>
+<h2 id="overall-impression-of-dataday-2020">Overall impression of Dataday 2020</h2>
+<p>This was one of the most technical conference events I have attended. I enjoyed that it felt like it was by technologists for technologists. Without even realizing who he was, I had a long lunch-time discussion with Marko Rodriguez, creator of the Apache Tinkerpop graph database project. Interestingly he is a huge prepper and was definitely ready for the pandemic.</p>
+
+
+
+	</main>
+	<footer>
+	    <hr/>
+	    &copy; <a href="https://www.ericbporter.com">Eric Porter</a> 2017 &ndash; 2020 | <a href="https://github.com/ebport">Github</a>
+	</footer>
+    </body>
+</html>

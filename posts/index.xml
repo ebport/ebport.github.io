@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Dataday Texas 2020 - A Few Quick Notes</title>
+      <link>http://ericbporter.com/posts/dataday-texas-2020/</link>
+      <pubDate>Sat, 14 Mar 2020 17:13:56 -0500</pubDate>
+      
+      <guid>http://ericbporter.com/posts/dataday-texas-2020/</guid>
+      <description>With downtime during pandemic-imposed social distancing, I&amp;rsquo;m returning to reflect on my experience at Dataday Texas 2020. After moving to Austin in 2019, I was pleasantly surprised to see the data-focused event less than a mile from my apartment.
+The 2 key themes I took away from the talks I attended were:
+ Open-source business models are becoming less sustainable due to pressure from cloud providers. A trend bringing ML to databases for &amp;ldquo;Tunables&amp;rdquo;  Evolution of Open-Source and Open-Core Models I was not expecting the level of distaste for Amazon among the speakers.</description>
+    </item>
+    
+    <item>
       <title>A Basic Teradata SQL-Mode for Emacs</title>
       <link>http://ericbporter.com/posts/emacs-td-sql/</link>
       <pubDate>Fri, 31 Aug 2018 22:17:34 -0500</pubDate>
